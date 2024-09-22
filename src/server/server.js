@@ -39,6 +39,10 @@ const userstring = process.env.USER;
 const userint    = process.env.USERINT; 
 const username   = userstring.concat(userint);
 
+const api_key_weather =process.env.api_key_weather;
+const api_key_apix = process.env.API_PIXAPAY; 
+
+
 app.post('/getcity',async (req,res) =>{
      
    
@@ -47,7 +51,7 @@ app.post('/getcity',async (req,res) =>{
 //https://secure.geonames.org/searchJSON?placename=London&maxRows=1&username=khalid2000
     try{
         
-        console.log("The City is ",city );
+        //console.log("The City is ",city );
         const apiurl = `https://secure.geonames.org/searchJSON?placename=${city}&maxRows=1&username=${username}`;
 
         const fetch = (await import('node-fetch')).default;
@@ -57,13 +61,88 @@ app.post('/getcity',async (req,res) =>{
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const data = response.json();  
-        res.send(data);
+        const data = await response.json();   
+       //console.log(data);
+
+        const {lng,lat,name} = data.geonames[0]; 
+        const location = {lng,lat,name}; 
+        console.log(location);
+        res.send(location);
         
     
     }catch(e){
         res.status(500).json({ message: 'Failed to fetch data', error: e.message });
     }
     
+
+});
+
+//https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en
+app.post('/getweather', async (req ,res)=>{
+
+    const {lng,lat,days} =req.body; 
+  
+    try{
+        const fetch = (await import('node-fetch')).default;
+        if(days >0 && days <7 ){
+            const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&include=minutely`);
+          
+            const data = await response.json();  
+
+            const {temp ,weather} = data.data[0];
+            const description =weather.description; 
+            res.send({temp,description}); 
+
+
+        }else if(days >7 ){
+             
+            const response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&days=${days}&units=M`);
+          
+            const data = await response.json();  
+            //console.log(data.data[data.data.length -1 ]); 
+           const {weather,temp,app_max_temp,app_min_temp} = data.data[data.data.length -1 ]; 
+            
+           // console.log("The Data is ",weather,temp,app_max_temp,app_min_temp);
+           const description =weather.description; 
+         
+          res.send({description,temp,app_max_temp,app_min_temp});  
+
+
+        } 
+    }catch(e){
+            console.log(e);
+    }
+   
+
+});
+
+
+app.post('/getimage' ,async (req,res)=>{
+      
+       const {name} = req.body; 
+      
+    try{
+         const api = `https://pixabay.com/api/?key=${api_key_apix}&image_type=photo&q=${name}`;
+         
+         const response = await fetch(api);
+         const data = await response.json(); 
+        
+
+          //res.send(data.hits[0].webformatURL);
+           let image ;
+           if(data.hits[0].webformatURL ==true ){
+             image = data.hits[0].webformatURL; 
+           } else {
+             image ="https://images.unsplash.com/photo-1726533870778-8be51bf99bb1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+          }
+         // console.log({image});
+         // let image = data.hits[0].webformatURL;
+          res.send({image});
+
+
+
+    }catch(e){
+        res.status(500).json({ message: 'Failed to fetch data', error: e.message });
+    }
 
 });

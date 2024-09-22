@@ -9,29 +9,27 @@ body {
     justify-content: center;
 }
 
-
 h1 {
     color: #333;
     margin-bottom: 20px;
 }
-
 
 .UIform {
     background-color: #fff;
     border: 2px solid #dedede;
     border-radius: 10px;
     padding: 50px;
-    width: 400px;
+    width: 90%; /* Changed to 90% for responsiveness */
+    max-width: 400px; /* Set a max width */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 
 .UIform div {
     margin-bottom: 15px;
 }
 
 label {
-    font-size: 14px;
+    font-size: 1rem; /* Use relative units */
     color: #555;
     display: block;
     margin-bottom: 10px;
@@ -44,7 +42,7 @@ input[type="date"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 1rem; /* Use relative units */
 }
 
 /* Submit button styling */
@@ -55,7 +53,7 @@ button {
     padding: 16px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem; /* Use relative units */
     width: 100%; 
     margin-top: 20px;
 }
@@ -71,7 +69,8 @@ button:hover {
     padding: 20px;
     border: 2px solid #dedede;
     border-radius: 10px;
-    width: 300px;
+    width: 90%; /* Changed to 90% for responsiveness */
+    max-width: 300px; /* Set a max width */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
@@ -79,7 +78,7 @@ button:hover {
 /* Travel info content */
 .travel_Info div {
     margin: 10px 0;
-    font-size: 16px;
+    font-size: 1rem; /* Use relative units */
     color: #333;
 }
 
@@ -91,4 +90,16 @@ button:hover {
     max-width: 100%;
     border-radius: 10px;
     border: 1px solid #ddd;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+    .UIform {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+
+    button {
+        padding: 12px; /* Adjust button padding */
+        font-size: 0.9rem; /* Slightly smaller font size */
+    }
 }
