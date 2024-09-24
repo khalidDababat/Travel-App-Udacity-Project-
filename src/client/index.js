@@ -8,6 +8,6 @@ const submentbuttn = document.getElementById('submentbuttn');
 submentbuttn.addEventListener('click',handelsubment);
 
 
-// alert("Hallo Khalid Dababat"); 
+ //alert("Hallo Khalid Dababat");
 
 export{handelsubment};

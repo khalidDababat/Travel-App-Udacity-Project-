@@ -5,35 +5,36 @@
 async function handelsubment(event){
     event.preventDefault(); 
 
-    // console.log("Hi Khalid ");
-    
-   const location = await getCountry(); 
-   const {lng ,lat,name} = location; 
-   
-   //console.log(lng ,lat,name);  
-   
-  const date = document.getElementById('date').value; 
-  
-  const days = getdays(date); // get Remaing Days Until Travell To City 
+     //console.log("Hi Khalid ");
+     const date = document.getElementById('date').value; 
 
+
+   const location = await getCountry(); 
+   const {lng ,lat,countryName} = location; 
+  // console.log("Hi Khalid ");
   
-  const weather = await getweather(lng,lat ,days); 
-  //console.log(weather);
+
+  const days = getdays(date); // get Remaing Days Until Travell To City 
+ 
   
-  const image = await getcityImage(name); 
-  //console.log(image);
-   
-  updateUI(location,date,days,weather,image); 
+   const weather = await getweather(lng,lat ,days); 
+   //console.log(weather);
+
+
+   const image = await getcityImage(countryName); 
+   //console.log("The Value Image In Client",image.image);
+
+  updateUI(countryName,date,days,weather,image); 
 
 } 
 
 
 async function updateUI(city ,date,days,weather,image){
-     
+
     document.getElementById('Rdays').innerHTML =
-     `The Reaming Days To Travel ${days}`;
+     `The Reaming Days To Travel<mark> ${days}</mark>`;
     document.getElementById('cityname').innerHTML =`
-     the City he wents To Travell ${city.name}
+     the Country he wents To Travell <mark>${city}</mark>
     `; 
     document.getElementById('travelDate').innerHTML =`
     The Travell Date is: ${date}
@@ -44,7 +45,7 @@ async function updateUI(city ,date,days,weather,image){
        `The Temperature is:${weather.temp}`
       ;
      document.getElementById('weather').innerHTML= days>7? 
-     `The Expected Weather is ${weather.description}`:
+     `The Expected Weather is <mark>${weather.description}</mark>`:
      `The weather is :${weather.description}`;
      document.getElementById('cityImage').innerHTML =
      `<img src="${image.image}" alt="The image Is Not Found">`;
@@ -56,10 +57,10 @@ async function updateUI(city ,date,days,weather,image){
 //***************************************************************8 */
 
 async function getcityImage(name){
-    
+
     try{
-         
         
+        //console.log("The Contry name :",name);  
         const res =await fetch('http://localhost:4000/getimage',{
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -133,7 +134,7 @@ async function getCountry(){
             body: JSON.stringify({city})
         });  
         const alldata = await res.json(); 
-       console.log(alldata); 
+        //console.log("The hhhhh",alldata); 
         
         
         

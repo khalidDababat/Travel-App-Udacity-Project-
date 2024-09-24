@@ -16,8 +16,8 @@ module.exports ={
     
     stats: 'minimal',
     output: {
-        libraryTarget: 'var',
-        library: 'Client',
+        
+        
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
       },

@@ -46,13 +46,15 @@ const api_key_apix = process.env.API_PIXAPAY;
 app.post('/getcity',async (req,res) =>{
      
    
-    const city  = req.body.city;
+    const city  = req.body.city; 
+    
+
     // console.log("The username is ",username );
-//https://secure.geonames.org/searchJSON?placename=London&maxRows=1&username=khalid2000
     try{
         
-        //console.log("The City is ",city );
-        const apiurl = `https://secure.geonames.org/searchJSON?placename=${city}&maxRows=1&username=${username}`;
+        //console.log("The City is ",city );  
+        //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=khalid2000
+        const apiurl = `http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
 
         const fetch = (await import('node-fetch')).default;
         const response = await fetch(apiurl); 
@@ -64,9 +66,9 @@ app.post('/getcity',async (req,res) =>{
         const data = await response.json();   
        //console.log(data);
 
-        const {lng,lat,name} = data.geonames[0]; 
-        const location = {lng,lat,name}; 
-        console.log(location);
+        const {lng,lat,countryName} = data.geonames[0]; 
+        const location = {lng,lat,countryName}; 
+        //console.log(location);
         res.send(location);
         
     
@@ -119,27 +121,26 @@ app.post('/getweather', async (req ,res)=>{
 
 app.post('/getimage' ,async (req,res)=>{
       
-       const {name} = req.body; 
-      
+       const name = req.body; 
+      // console.log("the Name of Country is:",name.name);
     try{
-         const api = `https://pixabay.com/api/?key=${api_key_apix}&image_type=photo&q=${name}`;
+         const api = `https://pixabay.com/api/?key=${api_key_apix}&image_type=photo&q= ${name.name}`;
          
          const response = await fetch(api);
          const data = await response.json(); 
         
-
-          //res.send(data.hits[0].webformatURL);
-           let image ;
-           if(data.hits[0].webformatURL ==true ){
-             image = data.hits[0].webformatURL; 
+          
+         let image ;
+       if((data.hits[0].webformatURL)){
+            image = data.hits[0].webformatURL; 
            } else {
-             image ="https://images.unsplash.com/photo-1726533870778-8be51bf99bb1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+            image ="https://images.unsplash.com/photo-1726533870778-8be51bf99bb1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
           }
-         // console.log({image});
-         // let image = data.hits[0].webformatURL;
-          res.send({image});
+          //console.log("The Result:",{image});
+          res.send({image}); 
 
-
+            
+           
 
     }catch(e){
         res.status(500).json({ message: 'Failed to fetch data', error: e.message });
