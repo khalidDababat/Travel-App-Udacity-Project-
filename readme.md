@@ -46,7 +46,11 @@ Server-side Frameworks and Libraries: If the project requires a server-side fram
 ### Installing
 
 you need the following:
-npm install ----> to install all the required dependencies
+npm install ----> to install all the required dependencies 
+
+### nodejs version  v20.17.0 
+write thie Command In Termenal >> node -v 
+v20.17.0
 
 
 make your env file with new names and add them to the server with the new names

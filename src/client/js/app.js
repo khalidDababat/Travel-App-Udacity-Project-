@@ -11,11 +11,11 @@ async function handelsubment(event){
 
    const location = await getCountry(); 
    const {lng ,lat,countryName} = location; 
-  // console.log("Hi Khalid ");
+      // console.log("Hi Khalid ");
   
 
   const days = getdays(date); // get Remaing Days Until Travell To City 
- 
+   
   
    const weather = await getweather(lng,lat ,days); 
    //console.log(weather);
@@ -145,6 +145,5 @@ async function getCountry(){
     }
 }
 
-
-export { getCountry, getweather, getcityImage };
 export {handelsubment};
+export { getCountry, getweather, getcityImage };
