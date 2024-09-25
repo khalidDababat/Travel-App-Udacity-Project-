@@ -22,7 +22,7 @@ async function handelsubment(event){
 
 
    const image = await getcityImage(countryName); 
-   //console.log("The Value Image In Client",image.image);
+  // console.log("The Value Image In Client",image);
 
   updateUI(countryName,date,days,weather,image); 
 
@@ -30,7 +30,8 @@ async function handelsubment(event){
 
 
 async function updateUI(city ,date,days,weather,image){
-
+      
+    
     document.getElementById('Rdays').innerHTML =
      `The Reaming Days To Travel<mark> ${days}</mark>`;
     document.getElementById('cityname').innerHTML =`
