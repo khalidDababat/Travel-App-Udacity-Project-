@@ -64,12 +64,12 @@ app.post('/getcity',async (req,res) =>{
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();   
-       //console.log(data);
+        
 
-        const {lng,lat,countryName} = data.geonames[0]; 
-        const location = {lng,lat,countryName}; 
-        //console.log(location);
-        res.send(location);
+        const {lng,lat,name} = data.geonames[0]; 
+         const location = {lng,lat,name}; 
+        // //console.log(location);
+         res.send(location);
         
     
     }catch(e){
@@ -78,7 +78,9 @@ app.post('/getcity',async (req,res) =>{
     
 
 });
+ 
 
+// API Point For Get Weather Data Current Or Forcast Data 
 //https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en
 app.post('/getweather', async (req ,res)=>{
 
@@ -118,7 +120,7 @@ app.post('/getweather', async (req ,res)=>{
 
 });
 
-
+ // API For Get image City User Enter 
 app.post('/getimage' ,async (req,res)=>{
       
        const name = req.body; 

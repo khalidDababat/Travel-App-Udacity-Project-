@@ -8,9 +8,10 @@ async function handelsubment(event){
      //console.log("Hi Khalid ");
      const date = document.getElementById('date').value; 
 
-
+    // return The Information For City 
    const location = await getCountry(); 
-   const {lng ,lat,countryName} = location; 
+   const {lng ,lat,name} = location;  
+
       // console.log("Hi Khalid ");
   
 
@@ -21,10 +22,10 @@ async function handelsubment(event){
    //console.log(weather);
 
 
-   const image = await getcityImage(countryName); 
-  // console.log("The Value Image In Client",image);
+   const image = await getcityImage(name); 
+   //console.log("The Value Image In Client",image);
 
-  updateUI(countryName,date,days,weather,image); 
+  updateUI(name,date,days,weather,image); 
 
 } 
 
@@ -124,7 +125,7 @@ function getdays(date){
 
 
 
-
+// function In The client Side To Send City To The Server And Fetch The Api Data 
 async function getCountry(){
     const city = document.getElementById('city').value;
     try{
