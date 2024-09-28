@@ -63,6 +63,7 @@ async function getcityImage(name){
     try{
         
         //console.log("The Contry name :",name);  
+        
         const res =await fetch('http://localhost:4000/getimage',{
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -130,6 +131,7 @@ async function getCountry(){
     const city = document.getElementById('city').value;
     try{
 
+       
         const res =await fetch('http://localhost:4000/getcity',{
             method: "POST",
             headers: { "Content-Type": "application/json" },

@@ -102,4 +102,19 @@ button:hover {
         padding: 12px; /* Adjust button padding */
         font-size: 0.9rem; /* Slightly smaller font size */
     }
+} 
+
+@media (max-width:401px) {
+    .UIform{
+        width: 60%;
+    }
+
+    .travel_Info{
+
+        width: 60%; 
+        margin-top: 10px; 
+        padding: 5px;
+    }
+
+
 }
