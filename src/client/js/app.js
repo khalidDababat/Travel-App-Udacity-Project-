@@ -1,38 +1,83 @@
 
-
-
+const er_city = document.getElementById('er_city');
+const er_date = document.getElementById('er_date');
 
 async function handelsubment(event){
     event.preventDefault(); 
+    const date = document.getElementById('date').value; 
 
-     //console.log("Hi Khalid ");
-     const date = document.getElementById('date').value; 
+    
 
-    // return The Information For City 
+    
+   // return The Information For City 
    const location = await getCountry(); 
-   const {lng ,lat,name} = location;  
 
-      // console.log("Hi Khalid ");
+   if(!Validate_Input()){
+         return; 
+   }
   
-
-  const days = getdays(date); // get Remaing Days Until Travell To City 
+  if(!location){ 
+    er_city.innerHTML = 'The Location Not Exist'; 
+    er_city.style.display ='block'; 
+  }else {
    
+    
+    const {lng ,lat,name} = location;
+
+    if(lng &&lat){
+    const days = getdays(date); // get Remaing Days Until Travell To City 
+     
+    
+     const weather = await getweather(lng,lat ,days); 
+     //console.log("The value is",weather);
+      
   
-   const weather = await getweather(lng,lat ,days); 
-   //console.log(weather);
+  
+     const image = await getcityImage(name); 
+     //console.log("The Value Image In Client",image);
+  
+    updateUI(name,date,days,weather,image); 
+    } 
+  }
+    
+    
+   
+
+   }
 
 
-   const image = await getcityImage(name); 
-   //console.log("The Value Image In Client",image);
+ 
+async function Validate_Input() { 
+  
+    er_city.style.display ="none"; 
+    er_date.style.display ="none"; 
+    const  city =document.getElementById('city').value; 
+    const date  =document.getElementById('date').value;
+    
+    if(!city){
+      er_city.innerHTML = 'Please Inter The City';
+      er_city.style.display ='block'; 
+      return; 
+    }
+    if(!date){
+      er_date.innerHTML ='Please Enter The  Date';
+      er_date.style.display ='block'; 
+      return; 
+    } 
+    if(getdays(date) <0 ){
+      er_date.innerHTML ="Please Enter The Valid Date ";
+      er_date.style.display ='block'; 
+      return;  
+    }
 
-  updateUI(name,date,days,weather,image); 
-
-} 
-
-
+    er_city.style.display ="none"; 
+    er_date.style.display ="none"; 
+   return true; 
+}
 async function updateUI(city ,date,days,weather,image){
       
-    
+   
+
     document.getElementById('Rdays').innerHTML =
      `The Reaming Days To Travel<mark> ${days}</mark>`;
     document.getElementById('cityname').innerHTML =`
@@ -98,8 +143,9 @@ async function getweather(lng,lat ,days){
             body: JSON.stringify({lng,lat,days})
         });  
         const alldata = await res.json(); 
+        //console.log("The Data is Client ",alldata);
+
         return alldata; 
-        // console.log("The Data is Client ",alldata);
       
         
       
@@ -129,10 +175,10 @@ function getdays(date){
 // function In The client Side To Send City To The Server And Fetch The Api Data 
 async function getCountry(){
     const city = document.getElementById('city').value;
-    try{
 
-       
-        const res =await fetch('http://localhost:4000/getcity',{
+    if(city){
+    try{
+    const res =await fetch('http://localhost:4000/getcity',{
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({city})
@@ -147,6 +193,10 @@ async function getCountry(){
     }catch(e){
           console.log("Error" ,e);
     }
+}else {
+  er_city.innerHTML = 'This field cannot be left empty';
+  er_city.style.display ='block'; 
+ }
 }
 
 export {handelsubment};

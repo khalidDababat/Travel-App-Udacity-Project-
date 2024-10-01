@@ -65,6 +65,15 @@ app.post('/getcity',async (req,res) =>{
         }
         const data = await response.json();   
         
+        if(!data.geonames.length){
+            const errormaseg ={
+                massege :'No City That Name',
+                error:true
+
+            }
+            return errormaseg; 
+        }
+
 
         const {lng,lat,name} = data.geonames[0]; 
          const location = {lng,lat,name}; 
@@ -85,7 +94,18 @@ app.post('/getcity',async (req,res) =>{
 app.post('/getweather', async (req ,res)=>{
 
     const {lng,lat,days} =req.body; 
-  
+    
+    if(days < 0) {
+        const errMsg = {
+            message: "Date cannot be in the past",
+            error: true
+        }
+        return errMsg
+    } 
+   
+    
+
+
     try{
         const fetch = (await import('node-fetch')).default;
         if(days >0 && days <7 ){
@@ -94,7 +114,9 @@ app.post('/getweather', async (req ,res)=>{
             const data = await response.json();  
 
             const {temp ,weather} = data.data[0];
+           
             const description =weather.description; 
+            
             res.send({temp,description}); 
 
 
