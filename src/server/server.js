@@ -95,7 +95,7 @@ app.post('/getweather', async (req ,res)=>{
 
     const {lng,lat,days} =req.body; 
     
-    if(days < 0) {
+    if(days <= 0) {
         const errMsg = {
             message: "Date cannot be in the past",
             error: true
@@ -107,7 +107,7 @@ app.post('/getweather', async (req ,res)=>{
 
 
     try{
-        // const fetch = (await import('node-fetch')).default;
+        const fetch = (await import('node-fetch')).default;
         if(days >0 && days <=7 ){
             const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&include=minutely`);
           

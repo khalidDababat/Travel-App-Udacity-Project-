@@ -11,6 +11,8 @@ async function handelsubment(event){
     
    // return The Information For City 
    const location = await getCountry(); 
+   
+   //console.log("The Location:",location); 
 
    if(!Validate_Input()){
          return; 
