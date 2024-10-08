@@ -26,10 +26,11 @@ async function handelsubment(event){
 
     if(lng &&lat){
     const days = getdays(date); // get Remaing Days Until Travell To City 
-     
+      
+    //console.log(days);
     
      const weather = await getweather(lng,lat ,days); 
-     //console.log("The value is",weather);
+    // console.log("The value is",weather);
       
   
   
@@ -200,4 +201,4 @@ async function getCountry(){
 }
 
 export {handelsubment};
-export { getCountry, getweather, getcityImage };
+

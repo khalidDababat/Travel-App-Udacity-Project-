@@ -56,7 +56,7 @@ app.post('/getcity',async (req,res) =>{
         //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=khalid2000
         const apiurl = `http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
 
-        const fetch = (await import('node-fetch')).default;
+        // const fetch = (await import('node-fetch')).default;
         const response = await fetch(apiurl); 
          
         
@@ -107,8 +107,8 @@ app.post('/getweather', async (req ,res)=>{
 
 
     try{
-        const fetch = (await import('node-fetch')).default;
-        if(days >0 && days <7 ){
+        // const fetch = (await import('node-fetch')).default;
+        if(days >0 && days <=7 ){
             const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&include=minutely`);
           
             const data = await response.json();  
@@ -154,7 +154,7 @@ app.post('/getimage' ,async (req,res)=>{
          const data = await response.json(); 
         
           
-         let image ;
+       let image ;
        if((data.hits[0].webformatURL)){
             image = data.hits[0].webformatURL; 
            } else {
