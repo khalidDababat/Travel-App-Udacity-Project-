@@ -27,9 +27,10 @@ async function handelsubment(event){
     const {lng ,lat,name} = location;
 
     if(lng &&lat){
+
     const days = getdays(date); // get Remaing Days Until Travell To City 
       
-    //console.log(days);
+    // console.log("THe Days num",days);
     
      const weather = await getweather(lng,lat ,days); 
     // console.log("The value is",weather);
@@ -172,7 +173,7 @@ function getdays(date){
 
 } 
 
-
+ 
 
 
 // function In The client Side To Send City To The Server And Fetch The Api Data 
@@ -187,7 +188,7 @@ async function getCountry(){
             body: JSON.stringify({city})
         });  
         const alldata = await res.json(); 
-        //console.log("The hhhhh",alldata); 
+        
         
         
         

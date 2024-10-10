@@ -43,6 +43,7 @@ const api_key_weather =process.env.api_key_weather;
 const api_key_apix = process.env.API_PIXAPAY; 
 
 
+
 app.post('/getcity',async (req,res) =>{
      
    
@@ -76,7 +77,7 @@ app.post('/getcity',async (req,res) =>{
 
 
         const {lng,lat,name} = data.geonames[0]; 
-         const location = {lng,lat,name}; 
+        const location = {lng,lat,name}; 
         // //console.log(location);
          res.send(location);
         
@@ -87,7 +88,12 @@ app.post('/getcity',async (req,res) =>{
     
 
 });
- 
+  
+
+
+
+
+
 
 // API Point For Get Weather Data Current Or Forcast Data 
 //https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en
@@ -95,7 +101,7 @@ app.post('/getweather', async (req ,res)=>{
 
     const {lng,lat,days} =req.body; 
     
-    if(days <= 0) {
+    if(days < 0) {
         const errMsg = {
             message: "Date cannot be in the past",
             error: true
@@ -108,7 +114,7 @@ app.post('/getweather', async (req ,res)=>{
 
     try{
         const fetch = (await import('node-fetch')).default;
-        if(days >0 && days <=7 ){
+        if(days >=0 && days <=7 ){
             const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&include=minutely`);
           
             const data = await response.json();  
